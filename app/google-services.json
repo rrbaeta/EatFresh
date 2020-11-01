@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "980463966206",
+    "firebase_url": "https://eat-fresh-be009.firebaseio.com",
+    "project_id": "eat-fresh-be009",
+    "storage_bucket": "eat-fresh-be009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980463966206:android:56385d1c3310321564d2af",
+        "android_client_info": {
+          "package_name": "com.example.eatfresh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980463966206-aqhsrii0q31fi28rcr2v8hq86637hl1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOra7Xe6vIc9hqNYe-oVBbzWvJ25X_kfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980463966206-aqhsrii0q31fi28rcr2v8hq86637hl1i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
