@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.example.eatfresh.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class FoodListFragment extends Fragment implements View.OnClickListener {
@@ -21,6 +22,8 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
 
     private Button addItemBtn;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public FoodListFragment() {
         // Required empty public constructor
@@ -34,6 +37,8 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
 
         addItemBtn = rootView.findViewById(R.id.addItemBtn);
+
+        addItemBtn.setOnClickListener(this);
 
         return rootView;
     }
