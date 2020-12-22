@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.eatfresh.Activity.MainActivity;
 import com.example.eatfresh.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
@@ -36,6 +38,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private String passwordInput;
 
     private static final String TAG = "YOUR-TAG-NAME";
+
+    public String msg_token_fmt;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -64,7 +68,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser, getView());
     }
 
     //all onClicks
@@ -114,4 +118,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     }
                 });
     }
+
+    private void updateUI(FirebaseUser user, View view){
+        if(user != null)
+        {
+
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_foodListFragment);
+
+        }
+    }
+
 }

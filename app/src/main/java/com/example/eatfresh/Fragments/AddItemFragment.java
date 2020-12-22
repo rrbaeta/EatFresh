@@ -19,18 +19,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.eatfresh.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,14 +44,12 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "YOUR-TAG-NAME";
 
-    private int dayCloud, monthCloud, yearCloud;
     private String uid;
     private String itemNameCloud;
+    private Timestamp expiryDate;
     private String KEY_UID = "uid";
     private String KEY_ITEM_NAME = "itemName";
-    private String KEY_DAY = "day";
-    private String KEY_MONTH = "month";
-    private String KEY_YEAR = "year";
+    private String KEY_EXPIRY_DATE = "expiryDate";
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -99,12 +95,11 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
 
                 Log.d(TAG, "onDateSet: dd/mm/yyyy :" + dayOfMonth + "/" + month + "/" + year);
 
+                //This creates a Timestamp which can be used to save as a number in the database and to subtract dates
+                expiryDate = new Timestamp(new Date(year - 1900, month - 1, dayOfMonth));
+
                 String date = dayOfMonth + "/" + month + "/" + year;
                 expiryDateTextView.setText(date);
-
-                dayCloud = dayOfMonth;
-                monthCloud = month;
-                yearCloud = year;
             }
         };
 
@@ -115,12 +110,9 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
     {
         //Write weight value to Cloud Firestore
         Map<String, Object> foodItem = new HashMap<>();
-        //user.put(KEY_WEIGHT, Double.valueOf(measurement.getWeight()));
         foodItem.put(KEY_UID, uid);
         foodItem.put(KEY_ITEM_NAME, itemNameCloud);
-        foodItem.put(KEY_DAY, dayCloud);
-        foodItem.put(KEY_MONTH, monthCloud);
-        foodItem.put(KEY_YEAR, yearCloud);
+        foodItem.put(KEY_EXPIRY_DATE, expiryDate.getSeconds());
 
         db.collection("foodItems")
                 .add(foodItem)

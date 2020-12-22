@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Definig a container for you List Item-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+     <TextView
+        android:id="@+id/itemNameTextView"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dip"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/daysLeftTextView"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dip"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_weight="1"
+        android:text="TextView" />
+
+</LinearLayout>
