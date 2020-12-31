@@ -52,7 +52,16 @@ public class ItemDataListAdapter extends ArrayAdapter<ItemData> {
         TextView daysLeftTextView = (TextView) convertView.findViewById(R.id.daysLeftTextView);
 
         itemNameTextView.setText(name);
-        daysLeftTextView.setText(daysLeftString  + " Days Left");
+
+        if (daysLeft > 0)
+        {
+            daysLeftTextView.setText(daysLeftString  + " Days Left");
+        }
+        else
+        {
+            daysLeftTextView.setText("Expired");
+        }
+
 
         return convertView;
     }

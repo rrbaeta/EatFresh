@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.eatfresh.Model.ItemData;
 import com.example.eatfresh.Model.ItemDataListAdapter;
@@ -27,6 +31,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class FoodListFragment extends Fragment implements View.OnClickListener {
@@ -34,13 +41,13 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
 
     private Button addItemBtn;
+    private Button logOutBtn;
     private ListView foodListView;
 
     private static final String TAG = "YOUR-TAG-NAME";
 
     private String uid;
     private ItemData itemData;
-    private ArrayAdapter<ItemData> itemDataArrayAdapter;
     private ArrayList<ItemData> itemDataArrayList = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -57,9 +64,11 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
 
         addItemBtn = rootView.findViewById(R.id.addItemBtn);
+        logOutBtn = rootView.findViewById(R.id.logOutBtn);
         foodListView = rootView.findViewById(R.id.foodListView);
 
         addItemBtn.setOnClickListener(this);
+        logOutBtn.setOnClickListener(this);
 
         //TODO onStart() probably shouldn't be called here
         onStart();
@@ -89,12 +98,9 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
                                 itemDataArrayList.add(itemData);
 
                                 //Custom Array Adapter
+                                itemDataArrayList.sort(Comparator.comparing(ItemData::getExpiryDate)); //sort the items list by the expiry date
                                 ItemDataListAdapter itemDataListAdapter = new ItemDataListAdapter(getContext(), R.layout.row, itemDataArrayList);
                                 foodListView.setAdapter(itemDataListAdapter);
-
-                                //Long dateTs = itemData.getExpiryDate();
-                                //itemDataArrayAdapter = new ArrayAdapter(getContext(), R.layout.row, R.id.list_content, itemDataArrayList);
-                                //foodListView.setAdapter(itemDataArrayAdapter);
 
                             }
                         } else {
@@ -102,6 +108,24 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
+
+
+        foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Bundle bundle = new Bundle();
+
+                //get exercise clicked adapter (it gets the ID from the document of respective item clicked from Cloud Firestore)
+                ItemData itemData1 = (ItemData) foodListView.getAdapter().getItem(position);
+                String itemClickedId = itemData1.getItemId();
+
+                //This sends the document selected id
+                bundle.putString("itemClickedId", itemClickedId);
+                Navigation.findNavController(rootView).navigate(R.id.action_foodListFragment_to_itemFragment, bundle);
+
+            }
+        });
 
 
         return rootView;
@@ -123,6 +147,10 @@ public class FoodListFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.addItemBtn:
                 Navigation.findNavController(view).navigate(R.id.action_foodListFragment_to_addItemFragment);
+                break;
+            case R.id.logOutBtn:
+                FirebaseAuth.getInstance().signOut();
+                Navigation.findNavController(view).navigate(R.id.action_foodListFragment_to_loginFragment);
                 break;
         }
 
