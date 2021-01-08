@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eatfresh.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,7 +48,7 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
 
     private String uid;
     private String itemNameCloud;
-    private Timestamp expiryDate;
+    private Timestamp expiryDate = null;
     private String KEY_UID = "uid";
     private String KEY_ITEM_NAME = "itemName";
     private String KEY_EXPIRY_DATE = "expiryDate";
@@ -147,8 +149,24 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.addItemButton:
 
-                itemNameCloud = itemName.getText().toString();
-                addItem();
+                if(itemName.getText().toString().trim().length() > 0 && expiryDate != null)
+                {
+                    itemNameCloud = itemName.getText().toString();
+                    addItem();
+                    Navigation.findNavController(view).navigate(R.id.action_addItemFragment_to_foodListFragment);
+                }
+                else if (itemName.getText().toString().trim().length() == 0 && expiryDate != null)
+                {
+                    Toast.makeText(getContext(), "Insert an item name.", Toast.LENGTH_SHORT).show();
+                }
+                else if (itemName.getText().toString().trim().length() > 0 && expiryDate == null)
+                {
+                    Toast.makeText(getContext(), "Select an expiry date", Toast.LENGTH_SHORT).show();
+                }
+                else if (itemName.getText().toString().trim().length() == 0 && expiryDate == null)
+                {
+                    Toast.makeText(getContext(), "Insert an item name and an expiry date", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
         }
