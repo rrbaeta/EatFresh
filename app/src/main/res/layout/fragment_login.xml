@@ -5,24 +5,37 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBlack"
     tools:context=".Fragments.LoginFragment">
 
     <EditText
         android:id="@+id/userPassord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@color/colorWhite"
+        android:hint="Password"
+        android:textColorHint="@color/colorWhite"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userEmail" />
 
     <EditText
         android:id="@+id/userEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rounded_edittext"
         android:ems="10"
         android:inputType="textEmailAddress"
+        android:textColor="@color/colorWhite"
+        android:hint="Email"
+        android:textColorHint="@color/colorWhite"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +44,9 @@
         android:id="@+id/signinBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="Sign In"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userPassord" />
@@ -40,7 +55,9 @@
         android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="Sign Up"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
